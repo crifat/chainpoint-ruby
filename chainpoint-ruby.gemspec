@@ -1,8 +1,8 @@
-require_relative 'lib/chainpoint/ruby/version'
+require_relative 'lib/chainpoint/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "chainpoint-ruby"
-  spec.version       = Chainpoint::Ruby::VERSION
+  spec.version       = Chainpoint::VERSION
   spec.authors       = ["Rifatul Islam Chayon", "A.T.M. Hassan Uzzaman Sajib"]
   spec.email         = ["rifatulchayon@gmail.com", "sajib.hassan@gmail.com"]
 
@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata["homepage_uri"] = "https://github.com/nigh7m4r3/chainpoint-ruby"
   spec.metadata["source_code_uri"] = "https://github.com/nigh7m4r3/chainpoint-ruby"
-  spec.metadata["changelog_uri"] = "TODO Put your gem's CHANGELOG.md URL here."
+  spec.metadata["changelog_uri"] = "https://github.com/nigh7m4r3/chainpoint-ruby"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
