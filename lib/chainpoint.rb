@@ -1,4 +1,21 @@
+require "openssl"
+require 'uri'
+require 'net/http'
+require 'json'
+require 'securerandom'
 require "chainpoint/version"
+require "chainpoint/configuration"
+
+require 'chainpoint/utils'
+require 'chainpoint/utils/helpers'
+require 'chainpoint/utils/network'
+require 'chainpoint/utils/proofs'
+
+require "chainpoint/submit_hash"
+require "chainpoint/submit_file_hash"
+require "chainpoint/get_proof"
+require "chainpoint/verify_proof"
+require "chainpoint/evaluate_proof"
 
 module Chainpoint
   class << self
