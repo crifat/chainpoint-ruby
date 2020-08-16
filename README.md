@@ -1,3 +1,7 @@
+# Important:
+
+chainpoint-ruby is for use with the Chainpont v4 Network. Currently Work In Progress.
+
 # Chainpoint::Ruby
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/chainpoint/ruby`. To experiment with that code, run `bin/console` for an interactive prompt.
