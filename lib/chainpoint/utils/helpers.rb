@@ -25,6 +25,13 @@ module Chainpoint
 
         arg
       end
+
+      # Checks if a UUID is a valid v4 UUID.
+      # @param {string} uuid - The uuid to check
+      # @returns {bool} true if uuid is valid, otherwise false
+      def is_valid_uuid?(uuid)
+        !(uuid =~ /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i).nil?
+      end
     end
   end
 end
