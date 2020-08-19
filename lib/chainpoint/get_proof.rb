@@ -12,6 +12,7 @@ module Chainpoint
       validate_proof_handlers
       get_proofs
 
+      self
     end
 
     private
