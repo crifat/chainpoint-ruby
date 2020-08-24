@@ -20,7 +20,7 @@ module Chainpoint
 
       def test_array_args(arg)
         raise Chainpoint::Error, '1st arg must be an Array' unless arg.is_a? Array
-        arg.flatten!
+        # arg.flatten!
         raise Chainpoint::Error, '1st arg must be a non-empty Array' if arg.empty?
 
         arg
@@ -31,6 +31,17 @@ module Chainpoint
       # @returns {bool} true if uuid is valid, otherwise false
       def is_valid_uuid?(uuid)
         !(uuid =~ /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i).nil?
+      end
+
+      def is_json?(json)
+        JSON.parse(json)
+        return true
+      rescue JSON::ParserError => e
+        return false
+      end
+
+      def is_base64?(value)
+        value.is_a?(String) && Base64.strict_encode64(Base64.strict_decode64(value)) == value rescue false
       end
     end
   end

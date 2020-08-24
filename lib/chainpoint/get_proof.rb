@@ -4,8 +4,11 @@ module Chainpoint
     include ::Chainpoint::Utils::Network
     include ::Chainpoint::Utils::Proofs
 
+    attr_reader :proofs
+
     def initialize(proof_handlers = [])
       @proof_handlers = proof_handlers || []
+      @proofs         = nil
     end
 
     def perform
@@ -29,7 +32,7 @@ module Chainpoint
 
         gateways_with_get_opts_data = gateways_with_get_opts(uuids_by_gateway)
 
-        fetch_endpoints(gateways_with_get_opts_data)
+        @proofs = fetch_endpoints(gateways_with_get_opts_data)
       rescue => e
         puts e.message
         raise ::Chainpoint::Error, e.message
