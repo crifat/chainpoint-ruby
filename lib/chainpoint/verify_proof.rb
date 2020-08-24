@@ -1,5 +1,70 @@
 module Chainpoint
   class VerifyProof
+    include ::Chainpoint::Utils::Helpers
+    include ::Chainpoint::Utils::Network
+    include ::Chainpoint::Utils::Proofs
 
+    attr_reader :results
+
+    def initialize(proofs, uri)
+      @proofs  = proofs || []
+      @uri     = uris || ''
+      @results = nil
+    end
+
+    def perform
+      evaluated_proofs           = ::Chainpoint::EvaluateProof.new(@proofs).perform.flat_proofs
+      gateway_uri                = validate_gateway_uri
+      single_gateway_flat_proofs = evaluated_proofs.map do |proof|
+        old_proof_uri = URI.parse(proof["uri"])
+        proof["uri"]  = URI.join(gateway_uri, old_proof_uri.path).to_s
+        proof
+      end
+
+      flat_proofs = single_gateway_flat_proofs.uniq do |p|
+        [
+            p["hash"],
+            p["proof_id"],
+            p["hash_received"],
+            p["branch"],
+            p["uri"],
+            p["type"],
+            p["anchor_id"],
+            p["expected_value"]
+        ]
+      end
+
+      uniq_anchor_uris = flat_proofs.map { |p| p["uri"] }.uniq
+
+      gateways_with_get_opts = uniq_anchor_uris.map do |anchor_uri|
+        {
+            method:  'GET',
+            uri:     anchor_uri,
+            body:    {},
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept':       'application/json'
+            },
+            timeout: 10000
+        }
+      end
+
+
+      self
+    end
+
+    private
+
+    def validate_gateway_uri
+      #   // Validate and return an Array with a single Gateway URI
+      if @uri.empty?
+        gateway_uri = ::Chainpoint::Configuration::GATEWAY_URI
+      else
+        raise Chainpoint::Error, 'uri arg must be a String' unless @uri.is_a?(String)
+        raise Chainpoint::Error, "uri arg contains invalid Gateway URI : #{@uri}" unless is_valid_uri?(@uri)
+        gateway_uri = @uri
+      end
+      gateway_uri
+    end
   end
 end
