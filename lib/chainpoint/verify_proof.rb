@@ -49,6 +49,38 @@ module Chainpoint
         }
       end
 
+      fetch_results = fetch_endpoints(gateways_with_get_opts)
+      get_responses = fetch_results.select do |res|
+        return res[:response] if res[:error].nil?
+        puts res[:error]
+        return false
+      end
+
+      flat_parsed_body = get_responses.flatten
+      hashes_found = {}
+      gateways_with_get_opts.each_with_index do |opt, i|
+        unless flat_parsed_body[i].nil?
+          uri_segments = opt[:uri].split('/')
+          block_height = uri_segments[uri_segments.length - 2]
+          hashes_found[block_height] = flat_parsed_body[i]
+        end
+      end
+
+      raise Chainpoint::Error, "No hashes were found" if hashes_found.empty?
+
+      flat_proofs.each do |proof|
+        uri_segments = proof[:uri].split('/')
+        block_height = uri_segments[uri_segments.length - 2]
+        if flat_proofs['expected_value'] == hashes_found[block_height]
+          proof[:verified] = true
+          proof[:verified_at] = DateTime.current
+        else
+          proof[:verified] = false
+          proof[:verified_at] = nil
+        end
+
+        @results << proof
+      end
 
       self
     end

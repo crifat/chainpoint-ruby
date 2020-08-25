@@ -43,6 +43,32 @@ module Chainpoint
       def is_base64?(value)
         value.is_a?(String) && Base64.strict_encode64(Base64.strict_decode64(value)) == value rescue false
       end
+
+      def fetch_endpoints(request_options_array)
+        result = []
+        request_options_array.each do |options|
+          parsed_uri = URI.parse(options[:uri])
+          base_uri = "#{parsed_uri.scheme}://#{parsed_uri.host}"
+
+          begin
+            response = submit_data(options)
+            raise response.message if response.code.to_i >= 400
+            result << {
+                uri: base_uri,
+                response: JSON.parse(response.read_body),
+                error: nil
+            }
+          rescue => e
+            result << {
+                uri: base_uri,
+                response: nil,
+                error: e.message
+            }
+          end
+        end
+
+        result
+      end
     end
   end
 end
