@@ -50,7 +50,7 @@ module Chainpoint
           elsif proof.is_a?(Hash) && proof.key?('type') && proof['type'] === 'Chainpoint'
             # // Probably a JS Object Proof
             normalized << proof
-          elsif (proof.is_a?(String) && (is_json?(proof) || is_base64?(proof)))
+          elsif proof.is_a?(String) && (is_json?(proof) || is_base64?(proof))
             # // Probably a JSON String or Base64 encoded binary proof
             normalized << proof
           elsif proof.is_a?(Hash) && !proof['proof'].nil? && proof.key?('proof_id')
