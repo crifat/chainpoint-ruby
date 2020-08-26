@@ -1,4 +1,4 @@
-require "#{File.dirname(__FILE__)}/test_helper.rb"
+require "test_helper.rb"
 
 class Chainpoint::GetProofTest < MiniTest::Test
   def setup
@@ -31,6 +31,14 @@ class Chainpoint::GetProofTest < MiniTest::Test
     error, message = get_proof([@proof_handles_data.first.merge({ "proof_id" => '123456' })])
     assert(error && message.include?('invalid proof_id'), 'Should have thrown with an invalid proof_id')
 
+  end
+
+  def test_should_return_proof_from_proof_handlers
+    proofs = ::Chainpoint::GetProof.new(@proof_handles_data).perform.proofs
+
+    puts proofs
+
+    p proofs.to_json
   end
 
   private

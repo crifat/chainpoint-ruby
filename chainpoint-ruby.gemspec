@@ -13,9 +13,9 @@ Gem::Specification.new do |spec|
 
   spec.metadata["allowed_push_host"] = "TODO Set to 'http://mygemserver.com'"
 
-  spec.metadata["homepage_uri"] = "https://github.com/nigh7m4r3/chainpoint-ruby"
+  spec.metadata["homepage_uri"]    = "https://github.com/nigh7m4r3/chainpoint-ruby"
   spec.metadata["source_code_uri"] = "https://github.com/nigh7m4r3/chainpoint-ruby"
-  spec.metadata["changelog_uri"] = "https://github.com/nigh7m4r3/chainpoint-ruby"
+  spec.metadata["changelog_uri"]   = "https://github.com/nigh7m4r3/chainpoint-ruby"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -25,4 +25,8 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+
+  spec.add_dependency 'msgpack'
+  spec.add_dependency 'json-schema'
+  spec.add_dependency 'sha3'
 end

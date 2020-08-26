@@ -1,6 +1,12 @@
 require "test_helper"
 
 class Chainpoint::SubmitHashTest < Minitest::Test
+  def setup
+    json_file = File.open File.join(File.dirname(__FILE__), 'data/hashes.json')
+    @hashes   = JSON.load(json_file)
+    json_file.close
+  end
+
   def test_that_it_has_a_version_number
     refute_nil ::Chainpoint::VERSION
   end
@@ -50,10 +56,19 @@ class Chainpoint::SubmitHashTest < Minitest::Test
     assert message.include?("uris arg contains invalid URIs")
   end
 
+  def test_should_return_mapped_proof_handles_after_successful_submission
+    nodes         = ['http://3.17.155.208', 'http://18.191.50.129', 'http://18.224.185.143']
+    proof_handles = ::Chainpoint::SubmitHash.new([@hashes.first], nodes).perform.proof_handles
+
+    p proof_handles
+
+    assert 1 == 1
+  end
+
   private
 
   def submit_hash(hashes, uris = nil)
-    error = false
+    error         = false
     error_message = ""
     begin
       ::Chainpoint::SubmitHash.new(hashes, uris).perform

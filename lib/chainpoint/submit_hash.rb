@@ -7,8 +7,8 @@ module Chainpoint
     attr_reader :proof_handles
 
     def initialize(hashes, uris = [])
-      @hashes = hashes
-      @uris   = uris || []
+      @hashes        = hashes
+      @uris          = uris || []
       @proof_handles = []
     end
 
@@ -28,7 +28,7 @@ module Chainpoint
           puts "getting GatewayIps from network failed, falling back to defaults: #{e.message}"
           gateway_uris = ::Chainpoint::Configuration::DEFAULT_GATEWAY_IPS
         end
-        gateway_uris = gateway_uris.map{|uri| "http://#{uri}"}
+        gateway_uris = gateway_uris.map { |uri| "http://#{uri}" }
       else
         uris     = @uris.uniq
         bad_uris = uris.reject { |uri| is_valid_uri?(uri) }
@@ -52,16 +52,16 @@ module Chainpoint
     def fetch_endpoints(gateway_uris, hashes)
       results = []
       gateway_uris.each do |geteway_uri|
-        options  = gateway_uri_options(geteway_uri, hashes)
+        options = gateway_uri_options(geteway_uri, hashes)
         begin
           response = submit_data(options)
           raise Chainpoint::Error, response.message if response.code.to_i >= 400
           result = JSON.parse(response.read_body)
           result["meta"]["submitted_to"] = options[:base_uri]
           results << {
-              uri: options[:base_uri],
+              uri:      options[:base_uri],
               response: result,
-              error: nil
+              error:    nil
           }
         rescue => e
 
@@ -74,17 +74,17 @@ module Chainpoint
 
     def gateway_uri_options(gateway_uri, hashes)
       {
-          method:   'POST',
-          base_uri: gateway_uri,
-          uri:      gateway_uri + '/hashes',
-          body:     {
-              hashes: hashes
+          "method"   => 'POST',
+          "base_uri" => gateway_uri,
+          "uri"      => gateway_uri + '/hashes',
+          "body"     => {
+              "hashes" => hashes
           },
-          headers:  {
-              'Content-Type': 'application/json',
-              Accept:         'application/json'
+          "headers"  => {
+              "Content-Type" => 'application/json',
+              "Accept"       => 'application/json'
           },
-          timeout:  10000
+          "timeout"  => 10000
       }
     end
 

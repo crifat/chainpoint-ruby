@@ -20,7 +20,7 @@ module Chainpoint
 
       def test_array_args(arg)
         raise Chainpoint::Error, '1st arg must be an Array' unless arg.is_a? Array
-        arg.flatten!
+        # arg.flatten!
         raise Chainpoint::Error, '1st arg must be a non-empty Array' if arg.empty?
 
         arg
@@ -31,6 +31,50 @@ module Chainpoint
       # @returns {bool} true if uuid is valid, otherwise false
       def is_valid_uuid?(uuid)
         !(uuid =~ /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i).nil?
+      end
+
+      # Checks if a UUID is a valid v1 UUID.
+      # @param {string} uuid - The uuid to check
+      # @returns {bool} true if uuid is valid, otherwise false
+      def is_valid_v1_uuid?(uuid)
+        !(uuid =~ /^[0-9A-F]{8}-[0-9A-F]{4}-[1][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i).nil?
+      end
+
+      def is_json?(json)
+        JSON.parse(json)
+        return true
+      rescue JSON::ParserError => e
+        return false
+      end
+
+      def is_base64?(value)
+        value.is_a?(String) && Base64.strict_encode64(Base64.strict_decode64(value)) == value rescue false
+      end
+
+      def fetch_endpoints(request_options_array)
+        result = []
+        request_options_array.each do |options|
+          parsed_uri = URI.parse(options["uri"])
+          base_uri   = "#{parsed_uri.scheme}://#{parsed_uri.host}"
+
+          begin
+            response = submit_data(options)
+            raise response.message if response.code.to_i >= 400
+            result << {
+                "uri"      => base_uri,
+                "response" => response.read_body,
+                "error"    => nil
+            }
+          rescue => e
+            result << {
+                "uri"      => base_uri,
+                "response" => nil,
+                "error"    => e.message
+            }
+          end
+        end
+
+        result
       end
     end
   end
