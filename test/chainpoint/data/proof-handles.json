@@ -1,0 +1,56 @@
+[
+  {
+    "uri": "http://3.17.155.208",
+    "hash": "1d2a9e92b561440e8d27a21eed114f7018105db00262af7d7087f7dea9986b0a",
+    "proof_id": "f3701560-7b5f-11ea-b4e5-01b46eb04882",
+    "group_id": "f37370c0-7b5f-41ea-a3ff-4754bd04f9a3"
+  },
+  {
+    "uri": "http://3.17.155.208",
+    "hash": "2d2a9e92b561440e8d27a21eed114f7018105db00262af7d7087f7dea9986b0a",
+    "proof_id": "f3701561-7b5f-11ea-b4e5-01429e2c9559",
+    "group_id": "f37370c1-7b5f-41ea-a3ff-4754bd04f9a3"
+  },
+  {
+    "uri": "http://3.17.155.208",
+    "hash": "3d2a9e92b561440e8d27a21eed114f7018105db00262af7d7087f7dea9986b0a",
+    "proof_id": "f3701562-7b5f-11ea-b4e5-01a2fdf426f9",
+    "group_id": "f37370c2-7b5f-41ea-a3ff-4754bd04f9a3"
+  },
+  {
+    "uri": "http://18.191.50.129",
+    "hash": "1d2a9e92b561440e8d27a21eed114f7018105db00262af7d7087f7dea9986b0a",
+    "proof_id": "f3708a90-7b5f-11ea-8a08-01d6cc30fed4",
+    "group_id": "f37370c0-7b5f-41ea-a3ff-4754bd04f9a3"
+  },
+  {
+    "uri": "http://18.191.50.129",
+    "hash": "2d2a9e92b561440e8d27a21eed114f7018105db00262af7d7087f7dea9986b0a",
+    "proof_id": "f3708a91-7b5f-11ea-8a08-01830087b15f",
+    "group_id": "f37370c1-7b5f-41ea-a3ff-4754bd04f9a3"
+  },
+  {
+    "uri": "http://18.191.50.129",
+    "hash": "3d2a9e92b561440e8d27a21eed114f7018105db00262af7d7087f7dea9986b0a",
+    "proof_id": "f3708a92-7b5f-11ea-8a08-01b123a01f94",
+    "group_id": "f37370c2-7b5f-41ea-a3ff-4754bd04f9a3"
+  },
+  {
+    "uri": "http://18.224.185.143",
+    "hash": "1d2a9e92b561440e8d27a21eed114f7018105db00262af7d7087f7dea9986b0a",
+    "proof_id": "f37126d0-7b5f-11ea-99fc-01804685ac0c",
+    "group_id": "f37370c0-7b5f-41ea-a3ff-4754bd04f9a3"
+  },
+  {
+    "uri": "http://18.224.185.143",
+    "hash": "2d2a9e92b561440e8d27a21eed114f7018105db00262af7d7087f7dea9986b0a",
+    "proof_id": "f37126d1-7b5f-11ea-99fc-0109f9a9f5e6",
+    "group_id": "f37370c1-7b5f-41ea-a3ff-4754bd04f9a3"
+  },
+  {
+    "uri": "http://18.224.185.143",
+    "hash": "3d2a9e92b561440e8d27a21eed114f7018105db00262af7d7087f7dea9986b0a",
+    "proof_id": "f37126d2-7b5f-11ea-99fc-01a4e33b249e",
+    "group_id": "f37370c2-7b5f-41ea-a3ff-4754bd04f9a3"
+  }
+]

@@ -60,31 +60,39 @@ module Chainpoint
       end
 
       def is_uri?(uri)
-        uri =~ /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix
+        # uri =~ /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix
+        u = URI.parse(uri)
+        u.is_a?(URI::HTTP) && !u.host.nil?
+      rescue URI::InvalidURIError
+        false
       end
 
       def is_valid_ip?(ip)
         return false if ip == '0.0.0.0'
+        # ip =~ /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/i
 
-        ip =~ /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/i
+        # support IPv4 and IPv6
+        ip =~ /((^\s*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))\s*$)|(^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$))/
       end
 
       def submit_data(options)
         # base_uri = options[:base_uri]
         url = URI(options[:uri])
 
-        http                  = Net::HTTP.new(url.host, url.port)
-        http.use_ssl = url.scheme == 'https'
+        http             = Net::HTTP.new(url.host, url.port)
+        http.use_ssl     = url.scheme == 'https'
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-        request               = case options[:method]
-                                  when 'POST'
-                                    Net::HTTP::Post.new(url)
-                                  when "PUT"
-                                    Net::HTTP::Put.new(url)
-                                end
-        options[:headers].each {|k, v| request[k.to_s] = v}
-        request.body = (options[:body]|| {}).to_json
+        request = case options[:method]
+                    when 'POST'
+                      Net::HTTP::Post.new(url)
+                    when "PUT"
+                      Net::HTTP::Put.new(url)
+                    else
+                      Net::HTTP::Get.new(url)
+                  end
+        options[:headers].each { |k, v| request[k.to_s] = v }
+        request.body = (options[:body] || {}).to_json unless request.is_a?(Net::HTTP::Get)
 
         http.request(request)
       end
