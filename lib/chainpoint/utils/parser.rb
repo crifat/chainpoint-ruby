@@ -26,7 +26,7 @@ module Chainpoint
 
       def parse_branches(start_hash, branch_array)
         branches           = []
-        current_hash_value = start_hash.dup
+        current_hash_value = hex_to_bin(start_hash)
         branch_array.each do |branch|
           # // initialize anchors array for this branch
           anchors = []
@@ -35,32 +35,32 @@ module Chainpoint
 
           branch_ops.each do |branch_op|
             if !branch_op["r"].nil?
-              current_hash_value << (is_hex?(branch_op["r"]) ? branch_op["r"] : utf8_to_hex(branch_op["r"]))
+              current_hash_value << (is_hex?(branch_op["r"]) ? hex_to_bin(branch_op["r"]) : branch_op["r"])
             elsif !branch_op["l"].nil?
-              current_hash_value << (is_hex?(branch_op["l"]) ? branch_op["l"] : utf8_to_hex(branch_op["l"]))
+              current_hash_value.prepend((is_hex?(branch_op["l"]) ? hex_to_bin(branch_op["l"]) : branch_op["l"]))
             elsif !branch_op["op"].nil?
               current_hash_value = case branch_op["op"]
                                      when 'sha-224'
-                                       Digest::SHA2.new(224).hexdigest(current_hash_value)
+                                       Digest::SHA2.new(224).digest(current_hash_value)
                                      when 'sha-256'
-                                       Digest::SHA2.new(256).hexdigest(current_hash_value)
+                                       Digest::SHA2.new(256).digest(current_hash_value)
                                      when 'sha-384'
-                                       Digest::SHA2.new(384).hexdigest(current_hash_value)
+                                       Digest::SHA2.new(384).digest(current_hash_value)
                                      when 'sha-512'
-                                       Digest::SHA2.new(512).hexdigest(current_hash_value)
+                                       Digest::SHA2.new(512).digest(current_hash_value)
 
                                      when 'sha3-224'
-                                       SHA3::Digest::SHA224.hexdigest(current_hash_value)
+                                       SHA3::Digest::SHA224.digest(current_hash_value)
                                      when 'sha3-256'
-                                       SHA3::Digest::SHA256.hexdigest(current_hash_value)
+                                       SHA3::Digest::SHA256.digest(current_hash_value)
                                      when 'sha3-384'
-                                       SHA3::Digest::SHA384.hexdigest(current_hash_value)
+                                       SHA3::Digest::SHA384.digest(current_hash_value)
                                      when 'sha3-512'
-                                       SHA3::Digest::SHA512.hexdigest(current_hash_value)
+                                       SHA3::Digest::SHA512.digest(current_hash_value)
 
                                      when 'sha-256-x2'
-                                       hash_value = Digest::SHA2.new(256).hexdigest(current_hash_value)
-                                       Digest::SHA2.new(256).hexdigest(hash_value)
+                                       hash_value = Digest::SHA2.new(256).digest(current_hash_value)
+                                       Digest::SHA2.new(256).digest(hash_value)
                                    end
 
             elsif !branch_op["anchors"].nil?
@@ -73,7 +73,7 @@ module Chainpoint
               "anchors" => anchors
           }
 
-          branch_obj["branches"] = parse_branches(current_hash_value, branch["branches"]) if !branch["branches"].nil?
+          branch_obj["branches"] = parse_branches(bin_to_hex(current_hash_value), branch["branches"]) if !branch["branches"].nil?
 
           # if this branch is a standard Chaipoint BTC anchor branch,
           # output the OP_RETURN value and the BTC transaction id
@@ -89,43 +89,43 @@ module Chainpoint
       def get_btc_anchor_info(start_hash, ops)
         #   // This calculation depends on the branch using the standard format
         #   // for btc_anchor_branch type branches created by Chainpoint services
-        current_hash_value = start_hash.dup
+        current_hash_value = hex_to_bin(start_hash)
         has_256x2          = false
         is_first_256x2     = false
         raw_tx             = ''
 
         op_result_table = ops.map do |op|
           if !op["r"].nil?
-            current_hash_value << (is_hex?(op["r"]) ? op["r"] : utf8_to_hex(op["r"]))
+            current_hash_value << (is_hex?(op["r"]) ? hex_to_bin(op["r"]) : op["r"])
           elsif !op["l"].nil?
-            current_hash_value << (is_hex?(op["l"]) ? op["l"] : utf8_to_hex(op["l"]))
+            current_hash_value.prepend((is_hex?(op["l"]) ? hex_to_bin(op["l"]) : op["l"]))
           elsif !op["op"].nil?
             current_hash_value = case op["op"]
                                    when 'sha-224'
-                                     Digest::SHA2.new(224).hexdigest(current_hash_value)
+                                     Digest::SHA2.new(224).digest(current_hash_value)
                                    when 'sha-256'
-                                     Digest::SHA2.new(256).hexdigest(current_hash_value)
+                                     Digest::SHA2.new(256).digest(current_hash_value)
                                    when 'sha-384'
-                                     Digest::SHA2.new(384).hexdigest(current_hash_value)
+                                     Digest::SHA2.new(384).digest(current_hash_value)
                                    when 'sha-512'
-                                     Digest::SHA2.new(512).hexdigest(current_hash_value)
+                                     Digest::SHA2.new(512).digest(current_hash_value)
 
                                    when 'sha3-224'
-                                     SHA3::Digest::SHA224.hexdigest(current_hash_value)
+                                     SHA3::Digest::SHA224.digest(current_hash_value)
                                    when 'sha3-256'
-                                     SHA3::Digest::SHA256.hexdigest(current_hash_value)
+                                     SHA3::Digest::SHA256.digest(current_hash_value)
                                    when 'sha3-384'
-                                     SHA3::Digest::SHA384.hexdigest(current_hash_value)
+                                     SHA3::Digest::SHA384.digest(current_hash_value)
                                    when 'sha3-512'
-                                     SHA3::Digest::SHA512.hexdigest(current_hash_value)
+                                     SHA3::Digest::SHA512.digest(current_hash_value)
 
                                    when 'sha-256-x2'
                                      # if this is the first double sha256, then the currentHashValue is the rawTx
                                      # on the public Bitcoin blockchain
                                      raw_tx = current_hash_value unless has_256x2
 
-                                     hash_value = Digest::SHA2.new(256).hexdigest(current_hash_value)
-                                     hash_value = Digest::SHA2.new(256).hexdigest(hash_value)
+                                     hash_value = Digest::SHA2.new(256).digest(current_hash_value)
+                                     hash_value = Digest::SHA2.new(256).digest(hash_value)
 
                                      if !has_256x2
                                        is_first_256x2 = true
@@ -155,7 +155,7 @@ module Chainpoint
       def parse_anchors(current_hash_value, anchors_array)
         anchors = []
         anchors_array.each do |anchor|
-          expected_value = current_hash_value.dup
+          expected_value = bin_to_hex(current_hash_value)
           # BTC merkle root values is in little endian byte order
           # All hashes and calculations in a Chainpoint proof are in big endian byte order
           # If we are determining the expected value for a BTC anchor, the expected value
@@ -196,10 +196,6 @@ module Chainpoint
 
       def bin_to_hex(binary_string)
         binary_string.unpack('H*').first
-      end
-
-      def utf8_to_hex(string)
-        string.unpack('H*').first
       end
 
       def zlib_inflate(value)

@@ -77,13 +77,13 @@ module Chainpoint
 
       def submit_data(options)
         # base_uri = options[:base_uri]
-        url = URI(options[:uri])
+        url = URI(options["uri"])
 
         http             = Net::HTTP.new(url.host, url.port)
         http.use_ssl     = url.scheme == 'https'
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-        request = case options[:method]
+        request = case options["method"]
                     when 'POST'
                       Net::HTTP::Post.new(url)
                     when "PUT"
@@ -91,8 +91,8 @@ module Chainpoint
                     else
                       Net::HTTP::Get.new(url)
                   end
-        options[:headers].each { |k, v| request[k.to_s] = v }
-        request.body = (options[:body] || {}).to_json unless request.is_a?(Net::HTTP::Get)
+        options["headers"].each { |k, v| request[k] = v }
+        request.body = (options["body"] || {}).to_json unless request.is_a?(Net::HTTP::Get)
 
         http.request(request)
       end

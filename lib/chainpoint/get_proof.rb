@@ -47,14 +47,14 @@ module Chainpoint
           response = submit_data(options)
           raise ::Chainpoint::Error, response.message if response.code.to_i >= 400
           result                     = JSON.parse(response.read_body)
-          result["anchors_complete"] ||= []
+          result.map! { |r| r["anchors_complete"] ||= []; r }
           results << result
         rescue => e
           puts e.message
         end
       end
 
-      results
+      results.flatten
     end
 
     #     // For each Gateway construct a set of GET options including
@@ -69,7 +69,7 @@ module Chainpoint
             "headers" => {
                 'accept'       => 'application/json',
                 'content-type' => 'application/json',
-                'proof_ids'    => proof_ids.join(',')
+                'proofIds' => proof_ids.join(',')
             },
             'timeout' => 10000
         }
@@ -88,7 +88,7 @@ module Chainpoint
       raise ::Chainpoint::Error, "some proof handles contain invalid URI values : #{bad_handle_uris.map { |h| h['uri'] }.join(', ')}" unless bad_handle_uris.empty?
 
       # Validate that *all* proofIds provided are valid or throw
-      bad_handle_uuids = @proof_handlers.reject { |ph| is_valid_uuid?(ph['proof_id']) }
+      bad_handle_uuids = @proof_handlers.reject { |ph| is_valid_v1_uuid?(ph['proof_id']) }
       raise ::Chainpoint::Error, "some proof handles contain invalid proof_id UUID values : #{bad_handle_uuids.map { |h| h['proof_id'] }.join(', ')}" unless bad_handle_uuids.empty?
     end
 

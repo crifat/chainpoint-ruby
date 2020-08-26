@@ -33,6 +33,14 @@ class Chainpoint::GetProofTest < MiniTest::Test
 
   end
 
+  def test_should_return_proof_from_proof_handlers
+    proofs = ::Chainpoint::GetProof.new(@proof_handles_data).perform.proofs
+
+    puts proofs
+
+    p proofs.to_json
+  end
+
   private
 
   def get_proof(phs)

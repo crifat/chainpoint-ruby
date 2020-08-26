@@ -8,8 +8,8 @@ module Chainpoint
 
     def initialize(proofs, uri)
       @proofs  = proofs || []
-      @uri     = uris || ''
-      @results = nil
+      @uri     = uri || ''
+      @results = []
     end
 
     def perform
@@ -38,30 +38,30 @@ module Chainpoint
 
       gateways_with_get_opts = uniq_anchor_uris.map do |anchor_uri|
         {
-            method:  'GET',
-            uri:     anchor_uri,
-            body:    {},
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept':       'application/json'
+            "method"  => 'GET',
+            "uri"     => anchor_uri,
+            "body"    => {},
+            "headers" => {
+                'Content-Type' => 'application/json',
+                'Accept'       => 'application/json'
             },
-            timeout: 10000
+            "timeout" => 10000
         }
       end
 
       fetch_results = fetch_endpoints(gateways_with_get_opts)
-      get_responses = fetch_results.select do |res|
-        return res[:response] if res[:error].nil?
-        puts res[:error]
-        return false
+
+      get_responses = []
+      fetch_results.each do |res|
+        res["error"].nil? ? (get_responses << res["response"]) : (puts res["error"])
       end
 
       flat_parsed_body = get_responses.flatten
-      hashes_found = {}
+      hashes_found     = {}
       gateways_with_get_opts.each_with_index do |opt, i|
         unless flat_parsed_body[i].nil?
-          uri_segments = opt[:uri].split('/')
-          block_height = uri_segments[uri_segments.length - 2]
+          uri_segments               = opt["uri"].split('/')
+          block_height               = uri_segments[uri_segments.length - 2]
           hashes_found[block_height] = flat_parsed_body[i]
         end
       end
@@ -69,13 +69,13 @@ module Chainpoint
       raise Chainpoint::Error, "No hashes were found" if hashes_found.empty?
 
       flat_proofs.each do |proof|
-        uri_segments = proof[:uri].split('/')
+        uri_segments = proof["uri"].split('/')
         block_height = uri_segments[uri_segments.length - 2]
-        if flat_proofs['expected_value'] == hashes_found[block_height]
-          proof[:verified] = true
-          proof[:verified_at] = DateTime.current
+        if proof["expected_value"] == hashes_found[block_height]
+          proof[:verified]    = true
+          proof[:verified_at] = Time.now.utc.iso8601
         else
-          proof[:verified] = false
+          proof[:verified]    = false
           proof[:verified_at] = nil
         end
 
