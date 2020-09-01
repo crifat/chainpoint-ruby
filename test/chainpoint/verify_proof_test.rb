@@ -22,6 +22,8 @@ class Chainpoint::VerifyProofTest < MiniTest::Test
 
     puts result
 
+    puts result.to_json
+
     assert(1 == 1)
 
   end

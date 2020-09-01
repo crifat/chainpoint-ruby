@@ -1,62 +1,38 @@
 [
   {
-    "hash": "ec30c8df7408e5e55927f6478f88c0ac98c90ad121c2dca4197dd4c3a2324213",
-    "proofId": "41322690-e77f-11ea-9ccd-01a5c0d70d49",
-    "hashReceived": "2020-08-26T09:33:52Z",
+    "hash": "236a622cc3c62b329014247a2fed2a4d64c1bc493bfac200fb6af73fd3288639",
+    "proof_id": "eb7c4270-ec66-11ea-811b-0141888d0e2e",
+    "hash_received": "2020-09-01T15:22:16Z",
     "branch": "cal_anchor_branch",
-    "uri": "http://3.17.155.208/calendar/9819ced5301902dc35a66e57bc63f33203653de4bdcc4c72b94681db660cc14c/data",
+    "uri": "http://3.17.155.208/calendar/965a3ae6fa132b2652a1f03b17fff939475be3f7248362d9fddc4c0d918b6052/data",
     "type": "cal",
-    "anchorId": "9819ced5301902dc35a66e57bc63f33203653de4bdcc4c72b94681db660cc14c",
-    "expectedValue": "8613c3c24d327c943a02c0dda7361ca674b24c11d1fe791ec76d109a6c161536",
+    "anchor_id": "965a3ae6fa132b2652a1f03b17fff939475be3f7248362d9fddc4c0d918b6052",
+    "expected_value": "854e63c237ac1f76178c505174e6579e21359d3000297ad4cee53d41c3203122",
     "verified": true,
-    "verifiedAt": "2020-08-26T12:01:47Z"
+    "verified_at": "2020-09-01T15:51:10Z"
   },
   {
-    "hash": "ec30c8df7408e5e55927f6478f88c0ac98c90ad121c2dca4197dd4c3a2324213",
-    "proofId": "41815800-e77f-11ea-835c-018f44865cfa",
-    "hashReceived": "2020-08-26T09:33:53Z",
+    "hash": "236a622cc3c62b329014247a2fed2a4d64c1bc493bfac200fb6af73fd3288639",
+    "proof_id": "ebcad7a0-ec66-11ea-9ccd-0172ca172de3",
+    "hash_received": "2020-09-01T15:22:17Z",
     "branch": "cal_anchor_branch",
-    "uri": "http://3.17.155.208/calendar/a1d3261d05a5ccbdd2cfadaeac2da5cdcb656a2468ad2464f6f412d441b770a5/data",
+    "uri": "http://3.17.155.208/calendar/a2cc511f7f93536e1b5d7e467b7199dbfbb7fe0a47ccbc5cfb307fa0327988d3/data",
     "type": "cal",
-    "anchorId": "a1d3261d05a5ccbdd2cfadaeac2da5cdcb656a2468ad2464f6f412d441b770a5",
-    "expectedValue": "3f694e8f2428ae03f5762ba29a921ca3ea3571914046e70f8b6a8a12587af35b",
+    "anchor_id": "a2cc511f7f93536e1b5d7e467b7199dbfbb7fe0a47ccbc5cfb307fa0327988d3",
+    "expected_value": "c8b4f4148611b456499fa63a57f4ac9602be6252ebdb12169599465d74b63a94",
     "verified": true,
-    "verifiedAt": "2020-08-26T12:01:47Z"
+    "verified_at": "2020-09-01T15:51:10Z"
   },
   {
-    "hash": "ec30c8df7408e5e55927f6478f88c0ac98c90ad121c2dca4197dd4c3a2324213",
-    "proofId": "41815800-e77f-11ea-835c-018f44865cfa",
-    "hashReceived": "2020-08-26T09:33:53Z",
-    "branch": "btc_anchor_branch",
-    "uri": "http://3.17.155.208/calendar/9111dcc13651327dbddc9a8e78212330e25d8ff9dd19cba2cf095255c39bbf47/data",
-    "type": "btc",
-    "anchorId": "645410",
-    "expectedValue": "b221508ef0646e3524de2544c919d4d304d96a423c234d75fd3a6c9d00e6e13e",
-    "verified": true,
-    "verifiedAt": "2020-08-26T12:01:47Z"
-  },
-  {
-    "hash": "ec30c8df7408e5e55927f6478f88c0ac98c90ad121c2dca4197dd4c3a2324213",
-    "proofId": "41d1e900-e77f-11ea-811b-0106601cb361",
-    "hashReceived": "2020-08-26T09:33:53Z",
+    "hash": "236a622cc3c62b329014247a2fed2a4d64c1bc493bfac200fb6af73fd3288639",
+    "proof_id": "ec1945c0-ec66-11ea-835c-01455220e0b9",
+    "hash_received": "2020-09-01T15:22:18Z",
     "branch": "cal_anchor_branch",
-    "uri": "http://3.17.155.208/calendar/b3328286ce91eaae007619d24bc586ad3adaee38263b34dcc0cf496b22cbfb13/data",
+    "uri": "http://3.17.155.208/calendar/4cd5d086d5900fff1acacdc976afc86fca8700d349ee5b63f70e875527c22b7d/data",
     "type": "cal",
-    "anchorId": "b3328286ce91eaae007619d24bc586ad3adaee38263b34dcc0cf496b22cbfb13",
-    "expectedValue": "8613c3c24d327c943a02c0dda7361ca674b24c11d1fe791ec76d109a6c161536",
+    "anchor_id": "4cd5d086d5900fff1acacdc976afc86fca8700d349ee5b63f70e875527c22b7d",
+    "expected_value": "dd5f2cb4ab365950b42271b17154a2b5ea61bb575705dbc02e36ad72d74fded2",
     "verified": true,
-    "verifiedAt": "2020-08-26T12:01:47Z"
-  },
-  {
-    "hash": "ec30c8df7408e5e55927f6478f88c0ac98c90ad121c2dca4197dd4c3a2324213",
-    "proofId": "41d1e900-e77f-11ea-811b-0106601cb361",
-    "hashReceived": "2020-08-26T09:33:53Z",
-    "branch": "btc_anchor_branch",
-    "uri": "http://3.17.155.208/calendar/9111dcc13651327dbddc9a8e78212330e25d8ff9dd19cba2cf095255c39bbf47/data",
-    "type": "btc",
-    "anchorId": "645410",
-    "expectedValue": "b221508ef0646e3524de2544c919d4d304d96a423c234d75fd3a6c9d00e6e13e",
-    "verified": true,
-    "verifiedAt": "2020-08-26T12:01:47Z"
+    "verified_at": "2020-09-01T15:51:10Z"
   }
 ]

@@ -73,11 +73,11 @@ module Chainpoint
         uri_segments = proof["uri"].split('/')
         block_height = uri_segments[uri_segments.length - 2]
         if proof["expected_value"] == hashes_found[block_height]
-          proof[:verified]    = true
-          proof[:verified_at] = Time.now.utc.iso8601
+          proof["verified"]    = true
+          proof["verified_at"] = Time.now.utc.iso8601
         else
-          proof[:verified]    = false
-          proof[:verified_at] = nil
+          proof["verified"]    = false
+          proof["verified_at"] = nil
         end
 
         @results << proof

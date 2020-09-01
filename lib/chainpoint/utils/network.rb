@@ -76,7 +76,6 @@ module Chainpoint
       end
 
       def submit_data(options)
-        # base_uri = options[:base_uri]
         url = URI(options["uri"])
 
         http             = Net::HTTP.new(url.host, url.port)
