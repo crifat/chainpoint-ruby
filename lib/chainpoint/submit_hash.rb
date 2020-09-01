@@ -57,9 +57,9 @@ module Chainpoint
           response = submit_data(options)
           raise Chainpoint::Error, response.message if response.code.to_i >= 400
           result = JSON.parse(response.read_body)
-          result["meta"]["submitted_to"] = options[:base_uri]
+          result["meta"]["submitted_to"] = options["base_uri"]
           results << {
-              uri:      options[:base_uri],
+              uri:      options["base_uri"],
               response: result,
               error:    nil
           }

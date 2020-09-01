@@ -16,6 +16,7 @@ module Chainpoint
       evaluated_proofs           = ::Chainpoint::EvaluateProof.new(@proofs).perform.flat_proofs
       gateway_uri                = validate_gateway_uri
       single_gateway_flat_proofs = evaluated_proofs.map do |proof|
+        proof = proof.dup
         old_proof_uri = URI.parse(proof["uri"])
         proof["uri"]  = URI.join(gateway_uri, old_proof_uri.path).to_s
         proof

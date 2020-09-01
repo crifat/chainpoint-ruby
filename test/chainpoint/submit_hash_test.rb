@@ -57,10 +57,13 @@ class Chainpoint::SubmitHashTest < Minitest::Test
   end
 
   def test_should_return_mapped_proof_handles_after_successful_submission
-    nodes         = ['http://3.17.155.208', 'http://18.191.50.129', 'http://18.224.185.143']
-    proof_handles = ::Chainpoint::SubmitHash.new([@hashes.first], nodes).perform.proof_handles
+    # nodes         = ['http://3.17.155.208', 'http://18.191.50.129', 'http://18.224.185.143']
+    proof_handles = ::Chainpoint::SubmitHash.new([@hashes.first], nil).perform.proof_handles
 
     p proof_handles
+
+    p proof_handles.to_json
+
 
     assert 1 == 1
   end
@@ -71,7 +74,7 @@ class Chainpoint::SubmitHashTest < Minitest::Test
     error         = false
     error_message = ""
     begin
-      ::Chainpoint::SubmitHash.new(hashes, uris).perform
+      ::Chainpoint::SubmitHash.new(hashes).perform
 
     rescue => e
       error = true

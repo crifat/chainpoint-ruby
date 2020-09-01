@@ -20,7 +20,9 @@ class Chainpoint::EvaluateTest < MiniTest::Test
     # puts flattened
 
     test_flattened = ::Chainpoint::EvaluateProof.new(@proofs).perform.flat_proofs
-    puts test_flattened
+    p test_flattened
+
+    p test_flattened.to_json
 
     assert(1 == 1)
 

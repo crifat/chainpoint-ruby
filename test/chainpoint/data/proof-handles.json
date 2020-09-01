@@ -1,20 +1,20 @@
 [
   {
+    "uri": "http://18.224.185.143",
+    "hash": "236a622cc3c62b329014247a2fed2a4d64c1bc493bfac200fb6af73fd3288639",
+    "proof_id": "eb7c4270-ec66-11ea-811b-0141888d0e2e",
+    "group_id": "cf63fa24-2cf7-49fe-8a6f-1b8c71146c34"
+  },
+  {
     "uri": "http://3.17.155.208",
-    "hash": "ec30c8df7408e5e55927f6478f88c0ac98c90ad121c2dca4197dd4c3a2324213",
-    "proof_id": "41322690-e77f-11ea-9ccd-01a5c0d70d49",
-    "group_id": "64b96473-365f-41c3-95fb-198e415689f2"
+    "hash": "236a622cc3c62b329014247a2fed2a4d64c1bc493bfac200fb6af73fd3288639",
+    "proof_id": "ebcad7a0-ec66-11ea-9ccd-0172ca172de3",
+    "group_id": "cf63fa24-2cf7-49fe-8a6f-1b8c71146c34"
   },
   {
     "uri": "http://18.191.50.129",
-    "hash": "ec30c8df7408e5e55927f6478f88c0ac98c90ad121c2dca4197dd4c3a2324213",
-    "proof_id": "41815800-e77f-11ea-835c-018f44865cfa",
-    "group_id": "64b96473-365f-41c3-95fb-198e415689f2"
-  },
-  {
-    "uri": "http://18.224.185.143",
-    "hash": "ec30c8df7408e5e55927f6478f88c0ac98c90ad121c2dca4197dd4c3a2324213",
-    "proof_id": "41d1e900-e77f-11ea-811b-0106601cb361",
-    "group_id": "64b96473-365f-41c3-95fb-198e415689f2"
+    "hash": "236a622cc3c62b329014247a2fed2a4d64c1bc493bfac200fb6af73fd3288639",
+    "proof_id": "ec1945c0-ec66-11ea-835c-01455220e0b9",
+    "group_id": "cf63fa24-2cf7-49fe-8a6f-1b8c71146c34"
   }
 ]
